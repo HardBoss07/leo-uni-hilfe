@@ -17,8 +17,8 @@ function setup() {
   ];
 
   // Aktuelle Werte, Ziel Werte
-  values = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1];
-  valuesGoal = [10, 10, 10, 10, 10, 3, 5, 2, 8, 9, 10, 3];
+  values =     [0, 3, 0, 0, 8, 1, 1, 4, 4, 2,  2, 7];
+  valuesGoal = [5, 7, 4, 3, 10, 5, 4, 6, 6, 4, 4, 8];
 
   // Farben für Kategorien
   colors = [
