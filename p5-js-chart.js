@@ -17,8 +17,8 @@ function setup() {
   ];
 
   // Aktuelle Werte, Ziel Werte
-  values =     [0, 3, 0, 0, 8, 1, 1, 4, 4, 2,  2, 7];
-  valuesGoal = [5, 7, 4, 3, 10, 5, 4, 6, 6, 4, 4, 8];
+  values =     [0, 3, 0, 0, 2, 1, 1, 3, 3, 2,  2, 7];
+  valuesGoal = [5, 6, 3, 3, 4, 4, 4, 5, 5, 4, 4, 8];
 
   // Farben für Kategorien
   colors = [
@@ -44,6 +44,8 @@ function draw() {
   drawRadialGrid();           // Kreise
   drawCategoryLines();        // Kategorie Trenner Linien
   drawGoalArea();             // Ziel Werte als Linie
+  drawCategoryCircle();       // Externer Kreis um Kategorien
+  drawCenterText();           // Zentrumstext hinzufügen
 }
 
 // Hintergrund mit semi-transparenter Farbe
@@ -73,6 +75,10 @@ function drawRadialGrid() {
     let r = map(i, 0, 10, minRadius, maxRadius);
     ellipse(0, 0, r * 2, r * 2);
   }
+  // Innerer Kreis für den Text
+  fill(255);
+  stroke(200);
+  ellipse(0, 0, minRadius * 2, minRadius * 2);
 }
 
 // Kategorie Separatoren
@@ -91,8 +97,8 @@ function drawCategoryLines() {
     line(x1, y1, x2, y2);
 
     // Rotierte Kategorie Position
-    let labelX = cos(angleMid) * (maxRadius + 40);
-    let labelY = sin(angleMid) * (maxRadius + 40);
+    let labelX = cos(angleMid) * (maxRadius + 30); // Etwas weiter nach innen
+    let labelY = sin(angleMid) * (maxRadius + 30);
 
     push(); // Speichern der transform Variablen
     translate(labelX, labelY);
@@ -124,7 +130,22 @@ function drawGoalArea() {
   endShape(CLOSE);
 }
 
-// Aktuelle Werte zeichnen mit voll saturierter Farbe
+// Externer Kreis um Kategorien zeichnen
+function drawCategoryCircle() {
+  stroke(200);
+  noFill();
+  ellipse(0, 0, (maxRadius + 60) * 2, (maxRadius + 60) * 2);
+}
+
+// Zentrumstext zeichnen
+function drawCenterText() {
+  fill(0);
+  noStroke();
+  textSize(14);
+  text("Computational\nEmpowerment", 0, 0);
+}
+
+// Aktuelle Werte zeichnen
 function drawCurrentValues() {
   for (let i = 0; i < categories.length; i++) {
     let angleStart = i * angleStep - 90;
@@ -148,5 +169,5 @@ function drawCurrentValues() {
 // Helfer Funktion zum Alpha Wert Anpassen
 function colorAlpha(hex, alpha) {
   let c = color(hex);
-  return color(red(c), green(c), blue(c), alpha);
+  return color(red(c), green(c), blue(c), alpha);
 }
