@@ -71,6 +71,34 @@ class Flower {
     line(this.x, this.baseY, this.x, this.baseY - this.stemHeight);
   }
 
+  drawLeafs() {
+    fill(34, 139, 34, this.alpha); // Green fill for leaves
+    noStroke();
+  
+    // Leaf size based on flowerSize
+    let leafWidth = this.flowerSize * 0.6;
+    let leafHeight = this.flowerSize * 0.3;
+  
+    // Offset to move ellipse so its end touches the stem base
+    let offset = leafWidth / 2;
+  
+    // Left leaf
+    push();
+    translate(this.x, this.baseY);
+    rotate(radians(-135)); // Point left
+    translate(offset, 0); // Move ellipse so right edge touches stem
+    ellipse(0, 0, leafWidth, leafHeight);
+    pop();
+  
+    // Right leaf
+    push();
+    translate(this.x, this.baseY);
+    rotate(radians(135)); // Point right
+    translate(-offset, 0); // Move ellipse so left edge touches stem
+    ellipse(0, 0, leafWidth, leafHeight);
+    pop();
+  }  
+
   // Blume
   drawFlower() {
     fill(255, 105, 180, this.alpha);
@@ -82,6 +110,7 @@ class Flower {
   show() {
     // Stiel anzeigen
     this.drawStem();
+    this.drawLeafs();
 
     // Blume anzeigen
     if (this.stemHeight >= this.maxStem) {
