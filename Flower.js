@@ -59,7 +59,7 @@ class Flower {
     }
   }
 
-  // Verdorbene Blume
+  // Wachstum fertig von Blume
   isDone() {
     return this.alpha <= 0;
   }
@@ -70,6 +70,34 @@ class Flower {
     strokeWeight(1.5 * SIZE_MULTIPLIER);
     line(this.x, this.baseY, this.x, this.baseY - this.stemHeight);
   }
+
+  drawLeafs() {
+    fill(34, 139, 34, this.alpha); // Grüün
+    noStroke();
+  
+    // Blatt grösse abhängig von Blütengrösse
+    let leafWidth = this.flowerSize * 0.7;
+    let leafHeight = this.flowerSize * 2;
+  
+    // Offset weil sonst Mittelpunkt des Blatts beim Stiel is
+    let offsetX = leafHeight / 2 - 20;
+  
+    // Linkes Blatt
+    push();
+    translate(this.x, this.baseY);
+    rotate(radians(-135));                    // Nach Links zeigen
+    translate(-offsetX, 0);                   // Ellipse zum Rand des Stiels bewegen
+    ellipse(0, 0, leafWidth, leafHeight);
+    pop();
+  
+    // Rechtes Blatt
+    push();
+    translate(this.x, this.baseY);
+    rotate(radians(135));                     // Nach Rechts zeigen
+    translate(offsetX, 0);                    // Ellipse zum Rand des Stiels bewegen
+    ellipse(0, 0, leafWidth, leafHeight);
+    pop();
+  }  
 
   // Blume
   drawFlower() {
@@ -82,6 +110,9 @@ class Flower {
   show() {
     // Stiel anzeigen
     this.drawStem();
+
+    // Blätter anzeigen
+    this.drawLeafs();
 
     // Blume anzeigen
     if (this.stemHeight >= this.maxStem) {
