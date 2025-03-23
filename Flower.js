@@ -43,10 +43,10 @@ class Flower {
   sprout() {
     if (this.stemHeight < this.maxStem) {
       this.stemHeight += this.growthSpeed;
-    } else if (this.flowerSize < this.maxFlowerSize) {
-      this.flowerSize += this.growthSpeed;
     } else if (this.leafSize < this.maxLeafSize) {
       this.leafSize += this.growthSpeed;
+    } else if (this.flowerSize < this.maxFlowerSize) {
+      this.flowerSize += this.growthSpeed;
     } else {
       this.phase = 'alive';
     }
@@ -108,11 +108,11 @@ class Flower {
 
     // Blume anzeigen
     if (this.stemHeight >= this.maxStem) {
-      this.drawFlower();
+      this.drawLeafs();
     }
 
-    if (this.flowerSize >= this.maxFlowerSize) {
-      this.drawLeafs();
+    if (this.leafSize >= this.maxLeafSize) {
+      this.drawFlower();
     }
   }
 }
