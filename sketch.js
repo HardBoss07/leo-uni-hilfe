@@ -1,4 +1,13 @@
 let flowers = [];
+let flower;
+let stem;
+let leafs;
+
+function preload() {
+  flower = loadImage('/assets/flower.svg');
+  stem = loadImage('/assets/stem.svg');
+  leafs = loadImage('/assets/leafs.svg');
+}
 
 function setup() {
   createCanvas(800, 800);
@@ -18,5 +27,5 @@ function draw() {
 }
 
 function mousePressed() {
-  flowers.push(new Flower(mouseX, mouseY));
+  flowers.push(new Flower(mouseX, mouseY, flower, stem, leafs));
 }
