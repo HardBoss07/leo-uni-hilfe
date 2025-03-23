@@ -10,6 +10,8 @@ class Flower {
     this.maxStem = 40 * SIZE_MULTIPLIER;
     this.flowerSize = 0;
     this.maxFlowerSize = 20 * SIZE_MULTIPLIER;
+    this.leafSize = 0;
+    this.maxLeafSize = 35 * SIZE_MULTIPLIER;
 
     this.growthSpeed = 2;
 
@@ -43,6 +45,8 @@ class Flower {
       this.stemHeight += this.growthSpeed;
     } else if (this.flowerSize < this.maxFlowerSize) {
       this.flowerSize += this.growthSpeed;
+    } else if (this.leafSize < this.maxLeafSize) {
+      this.leafSize += this.growthSpeed;
     } else {
       this.phase = 'alive';
     }
@@ -82,7 +86,7 @@ class Flower {
     push();
     tint(255, this.alpha);
     translate(0, 0);
-    image(this.leafsSVG, this.x - 15, this.baseY, 40, -this.flowerSize * 1.2);
+    image(this.leafsSVG, this.x - 15, this.baseY, 40, -this.leafSize);
     noTint();
     pop();
   }  
@@ -105,6 +109,9 @@ class Flower {
     // Blume anzeigen
     if (this.stemHeight >= this.maxStem) {
       this.drawFlower();
+    }
+
+    if (this.flowerSize >= this.maxFlowerSize) {
       this.drawLeafs();
     }
   }
