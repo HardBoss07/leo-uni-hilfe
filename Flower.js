@@ -3,13 +3,15 @@ const SIZE_MULTIPLIER = 3; // Fixierter Multiplikator um die Grösse der Blume z
 class Flower {
 
   // Grundvariablen definieren, Blume "zum leben" bringen
-  constructor(x, y) {
+  constructor(x, y, flowerSVG, stemSVG, leafsSVG) {
     this.x = x;
     this.baseY = y;
     this.stemHeight = 0;
     this.maxStem = 40 * SIZE_MULTIPLIER;
     this.flowerSize = 0;
     this.maxFlowerSize = 20 * SIZE_MULTIPLIER;
+    this.leafSize = 0;
+    this.maxLeafSize = 35 * SIZE_MULTIPLIER;
 
     this.growthSpeed = 2;
 
@@ -18,6 +20,10 @@ class Flower {
     this.alpha = 255;
 
     this.phase = 'sprout';  // phases: 'sprout', 'alive', 'die'
+
+    this.flowerSVG = flowerSVG;
+    this.stemSVG = stemSVG
+    this.leafsSVG = leafsSVG;
   }
 
   // Altert die Blume und entscheidet übers Verhalten
@@ -39,6 +45,8 @@ class Flower {
       this.stemHeight += this.growthSpeed;
     } else if (this.flowerSize < this.maxFlowerSize) {
       this.flowerSize += this.growthSpeed;
+    } else if (this.leafSize < this.maxLeafSize) {
+      this.leafSize += this.growthSpeed;
     } else {
       this.phase = 'alive';
     }
@@ -66,44 +74,31 @@ class Flower {
 
   // Stiel
   drawStem() {
-    stroke(34, 139, 34, this.alpha);
-    strokeWeight(1.5 * SIZE_MULTIPLIER);
-    line(this.x, this.baseY, this.x, this.baseY - this.stemHeight);
+    push();
+    tint(255, this.alpha);
+    translate(0, 0);
+    image(this.stemSVG, this.x, this.baseY - this.stemHeight, 10, this.stemHeight);
+    noTint();
+    pop();
   }
 
   drawLeafs() {
-    fill(34, 139, 34, this.alpha); // Grüün
-    noStroke();
-  
-    // Blatt grösse abhängig von Blütengrösse
-    let leafWidth = this.flowerSize * 0.7;
-    let leafHeight = this.flowerSize * 2;
-  
-    // Offset weil sonst Mittelpunkt des Blatts beim Stiel is
-    let offsetX = leafHeight / 2 - 20;
-  
-    // Linkes Blatt
     push();
-    translate(this.x, this.baseY);
-    rotate(radians(-135));                    // Nach Links zeigen
-    translate(-offsetX, 0);                   // Ellipse zum Rand des Stiels bewegen
-    ellipse(0, 0, leafWidth, leafHeight);
-    pop();
-  
-    // Rechtes Blatt
-    push();
-    translate(this.x, this.baseY);
-    rotate(radians(135));                     // Nach Rechts zeigen
-    translate(offsetX, 0);                    // Ellipse zum Rand des Stiels bewegen
-    ellipse(0, 0, leafWidth, leafHeight);
+    tint(255, this.alpha);
+    translate(0, 0);
+    image(this.leafsSVG, this.x - 15, this.baseY, 40, -this.leafSize);
+    noTint();
     pop();
   }  
 
   // Blume
   drawFlower() {
-    fill(255, 105, 180, this.alpha);
-    noStroke();
-    ellipse(this.x, this.baseY - this.stemHeight, this.flowerSize * 0.5, this.flowerSize * 0.9);
+    push();
+    tint(255, this.alpha);
+    translate(0, 0);
+    image(this.flowerSVG, this.x - 25, this.baseY - this.stemHeight, 50, -this.flowerSize);
+    noTint();
+    pop();
   }
 
   // Visualisierung der Blume
@@ -111,12 +106,13 @@ class Flower {
     // Stiel anzeigen
     this.drawStem();
 
-    // Blätter anzeigen
-    this.drawLeafs();
-
     // Blume anzeigen
     if (this.stemHeight >= this.maxStem) {
       this.drawFlower();
+    }
+
+    if (this.flowerSize >= this.maxFlowerSize) {
+      this.drawLeafs();
     }
   }
 }
